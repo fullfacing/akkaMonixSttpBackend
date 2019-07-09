@@ -1,2 +1,20 @@
-*.class
-*.log
+# scala
+target
+*.sc
+
+#IntelliJ
+*.ipr
+*.iws
+.idea
+
+# sbt specific
+.cache/
+.lib/
+dist/*
+lib_managed/
+project/boot/
+project/plugins/project/
+
+# Mac stuff
+.DS_Store
+project/project/
