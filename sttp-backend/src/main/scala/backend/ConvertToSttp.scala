@@ -12,7 +12,7 @@ import monix.reactive.Observable
 import scala.collection.immutable.Seq
 import scala.concurrent.Future
 
-object Sttp {
+object ConvertToSttp {
 
   /* Converts Akka-HTTP headers to the STTP equivalent. */
   def toSttpHeaders(response: HttpResponse): Seq[(String, String)] = {

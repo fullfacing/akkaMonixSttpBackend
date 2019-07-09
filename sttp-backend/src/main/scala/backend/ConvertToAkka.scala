@@ -11,7 +11,7 @@ import monix.execution.Scheduler
 import monix.reactive.Observable
 import scala.collection.immutable.Seq
 
-object Akka {
+object ConvertToAkka {
 
   /* Converts a HTTP method from STTP to the Akka-HTTP equivalent. */
   def toAkkaMethod(method: Method): HttpMethod = method match {
