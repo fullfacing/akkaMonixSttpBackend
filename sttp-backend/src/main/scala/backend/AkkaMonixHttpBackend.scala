@@ -13,11 +13,11 @@ import monix.eval.Task
 import monix.execution.Scheduler
 import monix.reactive.Observable
 
-class AkkaMonixHttpBackendV2(actorSystem: ActorSystem,
+class AkkaMonixHttpBackend(actorSystem: ActorSystem,
                                       ec: Scheduler,
                                       terminateActorSystemOnClose: Boolean,
                                       options: SttpBackendOptions,
-                                      client: AkkaMonixHttpClientV2,
+                                      client: AkkaMonixHttpClient,
                                       customConnectionPoolSettings: Option[ConnectionPoolSettings]
                             ) extends SttpBackend[Task, Observable[ByteString]] {
 
@@ -59,12 +59,12 @@ object AkkaMonixHttpBackendV2 {
             customLog: Option[LoggingAdapter] = None)
            (implicit ec: Scheduler = monix.execution.Scheduler.global): SttpBackend[Task, Observable[ByteString]] = {
 
-    val akkaMonixHttpBackendV2 = new AkkaMonixHttpBackendV2(
+    val akkaMonixHttpBackendV2 = new AkkaMonixHttpBackend(
       ActorSystem("sttp"),
       ec,
       terminateActorSystemOnClose = false,
       options,
-      AkkaMonixHttpClientV2.default(ActorSystem("sttp"), customHttpsContext, customLog),
+      AkkaMonixHttpClient.default(ActorSystem("sttp"), customHttpsContext, customLog),
       customConnectionPoolSettings)
 
     new FollowRedirectsBackend(akkaMonixHttpBackendV2)
@@ -79,17 +79,17 @@ object AkkaMonixHttpBackendV2 {
                       (implicit ec: Scheduler = monix.execution.Scheduler.global): SttpBackend[Task, Observable[ByteString]] = {
 
     usingClient(actorSystem, options, customConnectionPoolSettings,
-      AkkaMonixHttpClientV2.default(actorSystem, customHttpsContext, customLog))
+      AkkaMonixHttpClient.default(actorSystem, customHttpsContext, customLog))
   }
 
   /* This constructor allows for a specified Actor system. */
   def usingClient(actorSystem: ActorSystem,
                   options: SttpBackendOptions = SttpBackendOptions.Default,
                   customConnectionPoolSettings: Option[ConnectionPoolSettings] = None,
-                  client: AkkaMonixHttpClientV2)
+                  client: AkkaMonixHttpClient)
                  (implicit ec: Scheduler = monix.execution.Scheduler.global): SttpBackend[Task, Observable[ByteString]] = {
 
-    val akkaMonixHttpBackendV2 = new AkkaMonixHttpBackendV2(
+    val akkaMonixHttpBackendV2 = new AkkaMonixHttpBackend(
       actorSystem,
       ec,
       terminateActorSystemOnClose = false,

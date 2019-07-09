@@ -14,14 +14,14 @@ import akka.http.scaladsl.server.RejectionHandler
 import akka.http.scaladsl.server.ExceptionHandler
 import monix.eval.Task
 
-trait AkkaMonixHttpClientV2 {
+trait AkkaMonixHttpClient {
   def singleRequest(request: HttpRequest, settings: ConnectionPoolSettings): Task[HttpResponse]
 }
 
-object AkkaMonixHttpClientV2 {
+object AkkaMonixHttpClient {
   def default(system: ActorSystem,
               connectionContext: Option[HttpsConnectionContext],
-              customLog: Option[LoggingAdapter]): AkkaMonixHttpClientV2 = new AkkaMonixHttpClientV2 {
+              customLog: Option[LoggingAdapter]): AkkaMonixHttpClient = new AkkaMonixHttpClient {
 
     private val http = Http()(system)
 
@@ -35,7 +35,7 @@ object AkkaMonixHttpClientV2 {
     }
   }
 
-  def stubFromAsyncHandler(run: HttpRequest => Future[HttpResponse]): AkkaMonixHttpClientV2 =
+  def stubFromAsyncHandler(run: HttpRequest => Future[HttpResponse]): AkkaMonixHttpClient =
     (request: HttpRequest, _: ConnectionPoolSettings) => Task.deferFuture(run(request))
 
 
@@ -47,5 +47,5 @@ object AkkaMonixHttpClientV2 {
     executionContext: ExecutionContextExecutor = null,
     rejectionHandler: RejectionHandler = RejectionHandler.default,
     exceptionHandler: ExceptionHandler = null
-  ): AkkaMonixHttpClientV2 = stubFromAsyncHandler(Route.asyncHandler(route))
+  ): AkkaMonixHttpClient = stubFromAsyncHandler(Route.asyncHandler(route))
 }
