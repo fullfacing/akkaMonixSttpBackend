@@ -14,12 +14,12 @@ import monix.execution.Scheduler
 import monix.reactive.Observable
 
 class AkkaMonixHttpBackend(actorSystem: ActorSystem,
-                                      ec: Scheduler,
-                                      terminateActorSystemOnClose: Boolean,
-                                      options: SttpBackendOptions,
-                                      client: AkkaMonixHttpClient,
-                                      customConnectionPoolSettings: Option[ConnectionPoolSettings]
-                            ) extends SttpBackend[Task, Observable[ByteString]] {
+                           ec: Scheduler,
+                           terminateActorSystemOnClose: Boolean,
+                           options: SttpBackendOptions,
+                           client: AkkaMonixHttpClient,
+                           customConnectionPoolSettings: Option[ConnectionPoolSettings]
+                          ) extends SttpBackend[Task, Observable[ByteString]] {
 
   /* Initiates the Akka Actor system. */
   implicit val system: ActorSystem = actorSystem
@@ -89,9 +89,8 @@ object AkkaMonixHttpBackend {
                   client: AkkaMonixHttpClient)
                  (implicit ec: Scheduler = monix.execution.Scheduler.global): SttpBackend[Task, Observable[ByteString]] = {
 
-    val akkaMonixHttpBackend = new AkkaMonixHttpBackend(
-      actorSystem,
-      ec,
+    val akkaMonixHttpBackend = new AkkaMonixHttpBackend(actorSystem,
+      ec, 
       terminateActorSystemOnClose = false,
       options,
       client,
