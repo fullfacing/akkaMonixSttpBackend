@@ -1,5 +1,6 @@
 import java.io.{File, IOException, UnsupportedEncodingException}
 import java.nio.ByteBuffer
+
 import akka.http.scaladsl.model.Multipart.FormData
 import cats.implicits._
 import akka.http.scaladsl.coding.{Deflate, Gzip, NoCoding}
@@ -9,10 +10,11 @@ import akka.http.scaladsl.model.headers.{HttpEncodings, `Content-Length`, `Conte
 import akka.stream.{IOResult, Materializer}
 import akka.stream.scaladsl.{FileIO, Sink, StreamConverters}
 import akka.util.ByteString
-import backend.Akka.toAkkaHeaders
+import backend.ConvertToAkka._
 import com.softwaremill.sttp.{Multipart, _}
 import monix.execution.Scheduler
 import monix.reactive.Observable
+
 import scala.collection.immutable.Seq
 import scala.concurrent.Future
 

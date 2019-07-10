@@ -32,17 +32,17 @@ class AkkaMonixHttpBackend(actorSystem: ActorSystem,
       ProxySettings.connectionSettings(actorSystem, options, customConnectionPoolSettings), options
     )
     val updatedSettings = settingsWithProxy.withUpdatedConnectionSettings(_.withIdleTimeout(sttpRequest.options.readTimeout))
-    val requestMethod   = Akka.toAkkaMethod(sttpRequest.method)
+    val requestMethod   = ConvertToAkka.toAkkaMethod(sttpRequest.method)
     val partialRequest  = HttpRequest(uri = sttpRequest.uri.toString, method = requestMethod)
 
     val request = for {
-      headers <- Akka.toAkkaHeaders(sttpRequest.headers)
-      body    <- Akka.toAkkaRequestBody(sttpRequest.body, sttpRequest.headers, partialRequest)
+      headers <- ConvertToAkka.toAkkaHeaders(sttpRequest.headers)
+      body    <- ConvertToAkka.toAkkaRequestBody(sttpRequest.body, sttpRequest.headers, partialRequest)
     } yield body.withHeaders(headers)
 
     Task.fromEither(request)
       .flatMap(req  => client.singleRequest(req, updatedSettings))
-      .flatMap(resp => Sttp.toSttpResponse(resp, sttpRequest))
+      .flatMap(resp => ConvertToSttp.toSttpResponse(resp, sttpRequest))
   }
 
   def responseMonad: MonadError[Task] = TaskMonadAsyncError
@@ -50,7 +50,7 @@ class AkkaMonixHttpBackend(actorSystem: ActorSystem,
   override def close(): Unit = if (terminateActorSystemOnClose) { actorSystem.terminate() }
 }
 
-object AkkaMonixHttpBackendV2 {
+object AkkaMonixHttpBackend {
 
   /* Creates a new Actor system and Akka-HTTP client by default. */
   def apply(options: SttpBackendOptions = SttpBackendOptions.Default,
@@ -59,7 +59,7 @@ object AkkaMonixHttpBackendV2 {
             customLog: Option[LoggingAdapter] = None)
            (implicit ec: Scheduler = monix.execution.Scheduler.global): SttpBackend[Task, Observable[ByteString]] = {
 
-    val akkaMonixHttpBackendV2 = new AkkaMonixHttpBackend(
+    val akkaMonixHttpBackend = new AkkaMonixHttpBackend(
       ActorSystem("sttp"),
       ec,
       terminateActorSystemOnClose = false,
@@ -67,7 +67,7 @@ object AkkaMonixHttpBackendV2 {
       AkkaMonixHttpClient.default(ActorSystem("sttp"), customHttpsContext, customLog),
       customConnectionPoolSettings)
 
-    new FollowRedirectsBackend(akkaMonixHttpBackendV2)
+    new FollowRedirectsBackend(akkaMonixHttpBackend)
   }
 
   /* This constructor allows for a specified Actor system. */
@@ -89,7 +89,7 @@ object AkkaMonixHttpBackendV2 {
                   client: AkkaMonixHttpClient)
                  (implicit ec: Scheduler = monix.execution.Scheduler.global): SttpBackend[Task, Observable[ByteString]] = {
 
-    val akkaMonixHttpBackendV2 = new AkkaMonixHttpBackend(
+    val akkaMonixHttpBackend = new AkkaMonixHttpBackend(
       actorSystem,
       ec,
       terminateActorSystemOnClose = false,
@@ -97,6 +97,6 @@ object AkkaMonixHttpBackendV2 {
       client,
       customConnectionPoolSettings)
 
-    new FollowRedirectsBackend(akkaMonixHttpBackendV2)
+    new FollowRedirectsBackend(akkaMonixHttpBackend)
   }
 }
