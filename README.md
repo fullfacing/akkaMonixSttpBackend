@@ -4,7 +4,7 @@ akkaMonixSttpBackend is a backend for [sttp](https://sttp.readthedocs.io/en/late
 
 The motivation behind creating this backend as opposed to using the existing [Monix wrapped async-http-client backend](https://sttp.readthedocs.io/en/latest/backends/asynchttpclient.html) is to give an alternative for projects that already have Akka-HTTP as a dependency, removing the need for the async-http-client dependency as well.
 
-**Installation**<br/>
+**Installation:**<br/>
 Add the following sbt dependency:<br/>
 `"com.fullfacing" %% "akkaMonixSttpBackend" % "1.0.0"`
 
@@ -34,7 +34,3 @@ val response: Task[Response[Observable[ByteString]]] =
     .response(asStream[Observable[ByteString]])
     .send()
 ```
-
-
-
-
