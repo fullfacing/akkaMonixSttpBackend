@@ -9,7 +9,6 @@ import akka.stream.ActorMaterializer
 import akka.util.ByteString
 import com.fullfacing.backend.utils.{ConvertToAkka, ConvertToSttp, ProxySettings, TaskMonadAsyncError}
 import com.softwaremill.sttp._
-import com.softwaremill.sttp.impl.monix.TaskMonadAsyncError
 import monix.eval.Task
 import monix.execution.Scheduler
 import monix.reactive.Observable
