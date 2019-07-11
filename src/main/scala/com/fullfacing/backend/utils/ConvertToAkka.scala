@@ -1,14 +1,14 @@
-package backend
+package com.fullfacing.backend.utils
 
-import cats.implicits._
 import akka.http.scaladsl.model.HttpHeader.ParsingResult
-import akka.http.scaladsl.model.{HttpEntity, HttpHeader, HttpMethod, HttpMethods, HttpRequest}
+import akka.http.scaladsl.model._
 import akka.stream.scaladsl.{Source, StreamConverters}
 import akka.util.ByteString
-import options._
-import com.softwaremill.sttp._
+import cats.implicits._
+import com.softwaremill.sttp.{ByteArrayBody, ByteBufferBody, FileBody, InputStreamBody, Method, MultipartBody, NoBody, RequestBody, StreamBody, StringBody}
 import monix.execution.Scheduler
 import monix.reactive.Observable
+
 import scala.collection.immutable.Seq
 
 object ConvertToAkka {

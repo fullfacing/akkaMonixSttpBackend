@@ -1,4 +1,4 @@
-package backend
+package com.fullfacing.backend.utils
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.ClientTransport

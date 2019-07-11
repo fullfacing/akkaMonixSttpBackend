@@ -1,14 +1,14 @@
-package backend
+package com.fullfacing.backend.utils
 
 import akka.http.scaladsl.model.HttpResponse
 import akka.stream.Materializer
 import akka.util.ByteString
-import com.softwaremill.sttp._
 import cats.implicits._
-import options._
+import com.softwaremill.sttp.{BasicResponseAs, HeaderNames, IgnoreResponse, MappedResponseAs, Request, Response, ResponseAs, ResponseAsByteArray, ResponseAsFile, ResponseAsStream, ResponseAsString, ResponseMetadata, asByteArray}
 import monix.eval.Task
 import monix.execution.Scheduler
 import monix.reactive.Observable
+
 import scala.collection.immutable.Seq
 import scala.concurrent.Future
 

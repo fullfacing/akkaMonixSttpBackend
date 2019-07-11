@@ -1,24 +1,25 @@
+package com.fullfacing.backend
+
 import java.io.{File, IOException, UnsupportedEncodingException}
 import java.nio.ByteBuffer
 
-import akka.http.scaladsl.model.Multipart.FormData
-import cats.implicits._
 import akka.http.scaladsl.coding.{Deflate, Gzip, NoCoding}
 import akka.http.scaladsl.model.ContentTypes.`application/octet-stream`
-import akka.http.scaladsl.model.{BodyPartEntity, ContentType, HttpCharsets, HttpEntity, HttpRequest, HttpResponse, ResponseEntity}
+import akka.http.scaladsl.model.Multipart.FormData
+import akka.http.scaladsl.model._
 import akka.http.scaladsl.model.headers.{HttpEncodings, `Content-Length`, `Content-Type`}
-import akka.stream.{IOResult, Materializer}
 import akka.stream.scaladsl.{FileIO, Sink, StreamConverters}
+import akka.stream.{IOResult, Materializer}
 import akka.util.ByteString
-import backend.ConvertToAkka._
-import com.softwaremill.sttp.{Multipart, _}
+import cats.implicits._
+import com.softwaremill.sttp.{BasicRequestBody, ByteArrayBody, ByteBufferBody, FileBody, InputStreamBody, Multipart, ResponseAsStream, StringBody}
 import monix.execution.Scheduler
 import monix.reactive.Observable
 
 import scala.collection.immutable.Seq
 import scala.concurrent.Future
 
-package object options {
+package object utils {
 
   /* Converts an Akka-HTTP response entity into a byte array. */
   def entityToByteArray(entity: ResponseEntity)(implicit scheduler: Scheduler, mat: Materializer): Future[Array[Byte]] = {
@@ -76,7 +77,7 @@ package object options {
   def convertMultiPart(mp: Multipart): Either[Throwable, FormData.BodyPart] = {
     for {
       ct      <- createContentType(mp.contentType)
-      headers <- toAkkaHeaders(mp.additionalHeaders.toList)
+      headers <- ConvertToAkka.toAkkaHeaders(mp.additionalHeaders.toList)
     } yield {
       val fileName  = mp.fileName.fold(Map.empty[String, String])(fn => Map("filename" -> fn))
       val bodyPart  = createBodyPartEntity(ct, mp.body)
@@ -133,5 +134,4 @@ package object options {
   /* Checks if it is the correct Content Type length. */
   def isContentLength(headerKey: String): Boolean =
     headerKey.toLowerCase.contains(`Content-Length`.lowercaseName)
-
 }

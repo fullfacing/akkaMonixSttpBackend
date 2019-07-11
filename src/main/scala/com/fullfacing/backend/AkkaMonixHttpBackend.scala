@@ -1,4 +1,4 @@
-package backend
+package com.fullfacing.backend
 
 import akka.actor.ActorSystem
 import akka.event.LoggingAdapter
@@ -7,6 +7,7 @@ import akka.http.scaladsl.settings.ConnectionPoolSettings
 import akka.http.scaladsl.HttpsConnectionContext
 import akka.stream.ActorMaterializer
 import akka.util.ByteString
+import com.fullfacing.backend.utils.{ConvertToAkka, ConvertToSttp, ProxySettings, TaskMonadAsyncError}
 import com.softwaremill.sttp._
 import com.softwaremill.sttp.impl.monix.TaskMonadAsyncError
 import monix.eval.Task

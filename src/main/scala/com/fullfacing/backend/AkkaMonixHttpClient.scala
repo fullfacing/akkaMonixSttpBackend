@@ -1,18 +1,15 @@
-package backend
+package com.fullfacing.backend
 
 import akka.actor.ActorSystem
 import akka.event.LoggingAdapter
-import akka.http.scaladsl.{Http, HttpsConnectionContext}
 import akka.http.scaladsl.model.{HttpRequest, HttpResponse}
+import akka.http.scaladsl.server.{ExceptionHandler, RejectionHandler, Route, RoutingLog}
 import akka.http.scaladsl.settings.{ConnectionPoolSettings, ParserSettings, RoutingSettings}
-import akka.http.scaladsl.server.Route
-import scala.concurrent.Future
+import akka.http.scaladsl.{Http, HttpsConnectionContext}
 import akka.stream.Materializer
-import akka.http.scaladsl.server.RoutingLog
-import scala.concurrent.ExecutionContextExecutor
-import akka.http.scaladsl.server.RejectionHandler
-import akka.http.scaladsl.server.ExceptionHandler
 import monix.eval.Task
+
+import scala.concurrent.{ExecutionContextExecutor, Future}
 
 trait AkkaMonixHttpClient {
   def singleRequest(request: HttpRequest, settings: ConnectionPoolSettings): Task[HttpResponse]
