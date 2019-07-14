@@ -1,5 +1,5 @@
 [![CircleCI](https://circleci.com/gh/fullfacing/akkaMonixSttpBackend.svg?style=shield&circle-token=2547983c39c2197e6663282e9ae20f77eb97e03b)](https://circleci.com/gh/fullfacing/akkaMonixSttpBackend)
-[![Maven Central](https://img.shields.io/nexus/s/https/oss.sonatype.org/com.fullfacing/sttp-akka-monix.12.svg)](https://oss.sonatype.org/content/repositories/com/fullfacing/sttp-akka-monix.12_2.12/)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.fullfacing/sttp-akka-monix/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.fullfacing/sttp-akka-monix)
 
 # akkaMonixSttpBackend
 **Introduction:**<br/>

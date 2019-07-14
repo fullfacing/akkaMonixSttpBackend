@@ -48,3 +48,5 @@ val monix: Seq[ModuleID] = Seq(
 libraryDependencies ++= akka ++ sttp ++ cats ++ monix
 
 publishArtifact := true
+publishConfiguration := publishConfiguration.value.withOverwrite(true)
+publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true)
