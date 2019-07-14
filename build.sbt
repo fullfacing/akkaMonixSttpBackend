@@ -1,4 +1,4 @@
-name := "akkaMonixSttpBackend"
+name := "sttp-akka-monix"
 organization := "com.fullfacing"
 
 version  := "1.0.0"
