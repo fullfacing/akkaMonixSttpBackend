@@ -1,3 +1,6 @@
+[![CircleCI](https://circleci.com/gh/fullfacing/akkaMonixSttpBackend.svg?style=shield&circle-token=2547983c39c2197e6663282e9ae20f77eb97e03b)](https://circleci.com/gh/fullfacing/akkaMonixSttpBackend)
+[![Maven Central](https://img.shields.io/nexus/s/https/oss.sonatype.org/com.fullfacing/sttp-akka-monix.12.svg)](https://oss.sonatype.org/content/repositories/com/fullfacing/sttp-akka-monix.12_2.12/)
+
 # akkaMonixSttpBackend
 **Introduction:**<br/>
 akkaMonixSttpBackend is a backend for [sttp](https://sttp.readthedocs.io/en/latest/index.html) using [Akka-HTTP](https://doc.akka.io/docs/akka-http/current/index.html) to handle requests, and with [Task](https://monix.io/docs/3x/eval/task.html) as the response Monad and [Observable](https://monix.io/docs/3x/reactive/observable.html) as the streaming type. It is a modification of the [Akka-HTTP backend](https://sttp.readthedocs.io/en/latest/backends/akkahttp.html) provided by sttp, with instances of Futures deferred to Tasks and Akka-Streams Sources converted to Observables.
