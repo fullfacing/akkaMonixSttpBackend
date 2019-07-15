@@ -30,7 +30,7 @@ package object utils {
   def entityToString(entity: ResponseEntity, charset: Option[String], encoding: String)
                     (implicit scheduler: Scheduler, mat: Materializer): Future[String] = {
     entityToByteArray(entity).map { byteArray =>
-      s"($byteArray, ${charset.getOrElse(encoding)})"
+      new String(byteArray, charset.getOrElse(encoding))
     }
   }
 
