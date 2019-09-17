@@ -30,10 +30,6 @@ val akka: Seq[ModuleID] = Seq(
   "com.typesafe.akka" %% "akka-http" % "10.1.9"
 )
 
-val cats: Seq[ModuleID] = Seq(
-  "org.typelevel" %% "cats-core" % "2.0.0"
-)
-
 val sttp: Seq[ModuleID] = Seq(
   "com.softwaremill.sttp" %% "core" % "1.6.6",
 )
@@ -42,7 +38,7 @@ val monix: Seq[ModuleID] = Seq(
   "io.monix" %% "monix" % "3.0.0"
 )
 
-libraryDependencies ++= akka ++ sttp ++ cats ++ monix
+libraryDependencies ++= akka ++ sttp ++ monix
 
 publishArtifact := true
 publishConfiguration := publishConfiguration.value.withOverwrite(true)
