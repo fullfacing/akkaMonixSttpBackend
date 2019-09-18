@@ -47,7 +47,7 @@ class AkkaMonixHttpBackend(actorSystem: ActorSystem,
 
   def responseMonad: MonadError[Task] = TaskMonadAsyncError
 
-  override def close(): Unit = if (terminateActorSystemOnClose) { actorSystem.terminate() }
+  override def close(): Unit = if (terminateActorSystemOnClose) actorSystem.terminate
 }
 
 object AkkaMonixHttpBackend {

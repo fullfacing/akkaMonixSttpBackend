@@ -1,8 +1,8 @@
 name := "sttp-akka-monix"
 organization := "com.fullfacing"
 
-version  := "1.0.1"
-scalaVersion := "2.12.8"
+version  := "1.0.2"
+scalaVersion := "2.13.0"
 organization := "com.fullfacing"
 
 scalacOptions ++= Seq(
@@ -12,7 +12,6 @@ scalacOptions ++= Seq(
   "-Ywarn-unused:params",
   "-Ywarn-unused:patvars",
   "-Ywarn-unused:privates",
-  "-Ypartial-unification",
   "-deprecation",
   "-encoding", "UTF-8",
   "-feature",
@@ -21,31 +20,25 @@ scalacOptions ++= Seq(
   "-language:implicitConversions",
   "-unchecked",
   "-Xlint",
-  "-Yno-adapted-args",
   "-Ywarn-dead-code",
   "-Ywarn-numeric-widen",
-  "-Ywarn-value-discard",
-  "-Xfuture"
+  "-Ywarn-value-discard"
 )
 
 val akka: Seq[ModuleID] = Seq(
-  "com.typesafe.akka" %% "akka-stream" % "2.5.23",
-  "com.typesafe.akka" %% "akka-http" % "10.1.8"
-)
-
-val cats: Seq[ModuleID] = Seq(
-  "org.typelevel" %% "cats-core" % "1.6.0"
+  "com.typesafe.akka" %% "akka-stream" % "2.5.25",
+  "com.typesafe.akka" %% "akka-http" % "10.1.9"
 )
 
 val sttp: Seq[ModuleID] = Seq(
-  "com.softwaremill.sttp" %% "core" % "1.5.17",
+  "com.softwaremill.sttp" %% "core" % "1.6.6",
 )
 
 val monix: Seq[ModuleID] = Seq(
-  "io.monix" %% "monix" % "3.0.0-RC2"
+  "io.monix" %% "monix" % "3.0.0"
 )
 
-libraryDependencies ++= akka ++ sttp ++ cats ++ monix
+libraryDependencies ++= akka ++ sttp ++ monix
 
 publishArtifact := true
 publishConfiguration := publishConfiguration.value.withOverwrite(true)
