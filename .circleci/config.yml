@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  compile:
+  compile212:
     working_directory: /code
     docker:
       - image: openjdk:10
@@ -26,7 +26,40 @@ jobs:
             mkdir -p workspace
       - run:
           name: Compile JAR
-          command: sbt clean update compile
+          command: sbt ++2.12.10! clean update compile
+      - save_cache:
+          key: sbt-cache
+          paths:
+            - "~/.m2"
+            - "~/.sbt"
+            - "~/.ivy2/cache"
+  compile213:
+    working_directory: /code
+    docker:
+      - image: openjdk:10
+    environment:
+      - SBT_VERSION: 1.2.8
+    steps:
+      - run:
+          name: Install SBT
+          command: |
+            apt update && apt install -y curl
+            curl -L -o sbt-$SBT_VERSION.deb https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb
+            dpkg -i sbt-$SBT_VERSION.deb
+            rm sbt-$SBT_VERSION.deb
+            apt-get update
+            apt-get install -y sbt git
+            apt-get clean && apt-get autoclean
+      - checkout
+      - restore_cache:
+          key: sbt-cache
+      - run:
+          name: Create Artifact Directory
+          command: |
+            mkdir -p workspace
+      - run:
+          name: Compile JAR
+          command: sbt ++2.13.1! clean update compile
       - save_cache:
           key: sbt-cache
           paths:
@@ -37,4 +70,5 @@ workflows:
   version: 2
   deployment:
     jobs:
-      - compile
+      - compile212
+      - compile213
