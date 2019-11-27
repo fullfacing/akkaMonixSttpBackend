@@ -2,7 +2,7 @@ name := "sttp-akka-monix"
 organization := "com.fullfacing"
 
 version      := "1.0.3"
-scalaVersion := "2.13.0"
+scalaVersion := "2.13.1"
 organization := "com.fullfacing"
 
 crossScalaVersions := Seq(scalaVersion.value, "2.12.10")
