@@ -36,7 +36,7 @@ scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
 })
 
 val akka: Seq[ModuleID] = Seq(
-  "com.typesafe.akka" %% "akka-stream" % "2.6.0",
+  "com.typesafe.akka" %% "akka-stream" % "2.6.1",
   "com.typesafe.akka" %% "akka-http" % "10.1.11"
 )
 
@@ -45,7 +45,7 @@ val sttp: Seq[ModuleID] = Seq(
 )
 
 val monix: Seq[ModuleID] = Seq(
-  "io.monix" %% "monix" % "3.0.0"
+  "io.monix" %% "monix" % "3.1.0"
 )
 
 libraryDependencies ++= akka ++ sttp ++ monix
