@@ -4,7 +4,7 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.ClientTransport
 import akka.http.scaladsl.model.headers.BasicHttpCredentials
 import akka.http.scaladsl.settings.ConnectionPoolSettings
-import com.softwaremill.sttp.SttpBackendOptions
+import sttp.client.SttpBackendOptions
 
 object ProxySettings {
 

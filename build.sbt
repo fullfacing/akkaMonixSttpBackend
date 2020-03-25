@@ -41,7 +41,10 @@ val akka: Seq[ModuleID] = Seq(
 )
 
 val sttp: Seq[ModuleID] = Seq(
-  "com.softwaremill.sttp" %% "core" % "1.7.2",
+  "com.softwaremill.sttp.client" %% "core" % "2.0.6",
+  "com.softwaremill.sttp.client" %% "akka-http-backend" % "2.0.6",
+  "com.softwaremill.sttp.client" %% "http4s-backend" % "2.0.6",
+  "com.softwaremill.sttp" %% "async-http-client-backend-monix" % "1.7.2"
 )
 
 val monix: Seq[ModuleID] = Seq(

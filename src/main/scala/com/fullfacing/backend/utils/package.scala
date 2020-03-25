@@ -1,6 +1,6 @@
 package com.fullfacing.backend
 
-import java.io.{File, IOException, UnsupportedEncodingException}
+import java.io.{File, UnsupportedEncodingException}
 import java.nio.ByteBuffer
 
 import akka.http.scaladsl.coding.{Deflate, Gzip, NoCoding}
@@ -12,9 +12,10 @@ import akka.stream.scaladsl.{FileIO, Sink, StreamConverters}
 import akka.stream.{IOResult, Materializer}
 import akka.util.ByteString
 import cats.implicits._
-import com.softwaremill.sttp.{BasicRequestBody, ByteArrayBody, ByteBufferBody, FileBody, InputStreamBody, Multipart, ResponseAsStream, StringBody}
 import monix.execution.Scheduler
 import monix.reactive.Observable
+import sttp.client.{BasicRequestBody, ByteArrayBody, ByteBufferBody, FileBody, InputStreamBody, StringBody}
+import sttp.model.Part
 
 import scala.collection.immutable.Seq
 import scala.concurrent.Future
@@ -35,22 +36,17 @@ package object utils {
   }
 
   /* Converts an Akka-HTTP response entity into a file. */
-  def entityToFile(entity: ResponseEntity, file: File, overwrite: Boolean)(implicit mat: Materializer): Future[IOResult] = {
+  def entityToFile(entity: ResponseEntity, file: File)(implicit mat: Materializer): Future[IOResult] = {
     if (!file.exists())
       file.getParentFile.mkdirs() & file.createNewFile()
-    else if (!overwrite)
-      throw new IOException(s"File ${file.getAbsolutePath} exists - overwriting prohibited")
 
     entity.dataBytes.runWith(FileIO.toPath(file.toPath))
   }
 
   /* Converts an Akka-HTTP response entity into an Observable. */
-  def entityToObservable[T](entity: ResponseEntity, response: ResponseAsStream[T, Observable[ByteString]])
-                           (implicit mat: Materializer): Future[T] = {
-    Future.successful(response.responseIsStream(
-      Observable.fromReactivePublisher(entity.dataBytes.runWith(Sink.asPublisher[ByteString](fanout = false)))
-    ))
-  }
+  def entityToObservable(entity: ResponseEntity)
+                        (implicit mat: Materializer): Observable[ByteString] =
+    Observable.fromReactivePublisher(entity.dataBytes.runWith(Sink.asPublisher[ByteString](fanout = false)))
 
   /* Discards an Akka-HTTP response entity. */
   def discardEntity(entity: ResponseEntity)(implicit mat: Materializer, scheduler: Scheduler): Future[Unit] = {
@@ -67,17 +63,17 @@ package object utils {
   }
 
   /* Creates a MultiPart Request. */
-  def createMultiPartRequest(mps: Seq[Multipart], request: HttpRequest): Either[Throwable, HttpRequest] = {
+  def createMultiPartRequest(mps: Seq[Part[BasicRequestBody]], request: HttpRequest): Either[Throwable, HttpRequest] = {
     mps.map(convertMultiPart).toList.sequence.map { bodyPart =>
       FormData()
       request.withEntity(FormData(bodyPart: _*).toEntity())
     }
   }
   /* Converts a MultiPart to a MultiPartFormData Type. */
-  def convertMultiPart(mp: Multipart): Either[Throwable, FormData.BodyPart] = {
+  def convertMultiPart(mp: Part[BasicRequestBody]): Either[Throwable, FormData.BodyPart] = {
     for {
       ct      <- createContentType(mp.contentType)
-      headers <- ConvertToAkka.toAkkaHeaders(mp.additionalHeaders.toList)
+      headers <- ConvertToAkka.toAkkaHeaders(mp.headers)
     } yield {
       val fileName  = mp.fileName.fold(Map.empty[String, String])(fn => Map("filename" -> fn))
       val bodyPart  = createBodyPartEntity(ct, mp.body)
