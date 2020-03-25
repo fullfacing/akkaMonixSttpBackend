@@ -88,9 +88,8 @@ object AkkaMonixHttpBackend {
                        customConnectionPoolSettings: Option[ConnectionPoolSettings] = None,
                        customLog: Option[LoggingAdapter] = None)
                       (implicit ec: Scheduler = monix.execution.Scheduler.global): SttpBackend[Task, Observable[ByteString], NothingT] = {
-
-    usingClient(actorSystem, options, customConnectionPoolSettings,
-      AkkaMonixHttpClient.default(actorSystem, customHttpsContext, customLog))
+    val client = AkkaMonixHttpClient.default(actorSystem, customHttpsContext, customLog)
+    usingClient(actorSystem, options, customConnectionPoolSettings, client)
   }
 
   /* This constructor allows for a specified Actor system. */

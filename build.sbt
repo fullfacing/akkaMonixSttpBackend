@@ -1,6 +1,4 @@
-name := "sttp-akka-monix"
-organization := "com.fullfacing"
-
+name         := "sttp-akka-monix"
 version      := "1.0.3"
 scalaVersion := "2.13.1"
 organization := "com.fullfacing"
@@ -41,10 +39,7 @@ val akka: Seq[ModuleID] = Seq(
 )
 
 val sttp: Seq[ModuleID] = Seq(
-  "com.softwaremill.sttp.client" %% "core" % "2.0.6",
-  "com.softwaremill.sttp.client" %% "akka-http-backend" % "2.0.6",
-  "com.softwaremill.sttp.client" %% "http4s-backend" % "2.0.6",
-  "com.softwaremill.sttp" %% "async-http-client-backend-monix" % "1.7.2"
+  "com.softwaremill.sttp.client" %% "core" % "2.0.6"
 )
 
 val monix: Seq[ModuleID] = Seq(
