@@ -51,3 +51,4 @@ libraryDependencies ++= akka ++ sttp ++ monix
 publishArtifact := true
 publishConfiguration := publishConfiguration.value.withOverwrite(true)
 publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true)
+publishTo := sonatypePublishToBundle.value
