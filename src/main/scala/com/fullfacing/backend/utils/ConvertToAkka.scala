@@ -5,11 +5,11 @@ import akka.http.scaladsl.model._
 import akka.stream.scaladsl.{Source, StreamConverters}
 import akka.util.ByteString
 import cats.implicits._
-import com.softwaremill.sttp.{ByteArrayBody, ByteBufferBody, FileBody, InputStreamBody, Method, MultipartBody, NoBody, RequestBody, StreamBody, StringBody}
 import monix.execution.Scheduler
 import monix.reactive.Observable
-
-import scala.collection.immutable.Seq
+import sttp.client.{ByteArrayBody, ByteBufferBody, FileBody, InputStreamBody, MultipartBody, NoBody, RequestBody, StreamBody, StringBody}
+import sttp.model.{Header, Method}
+import scala.collection.immutable
 
 object ConvertToAkka {
 
@@ -24,16 +24,16 @@ object ConvertToAkka {
     case Method.PATCH   => HttpMethods.PATCH
     case Method.CONNECT => HttpMethods.CONNECT
     case Method.TRACE   => HttpMethods.TRACE
-    case _              => HttpMethod.custom(method.m)
+    case _              => HttpMethod.custom(method.method)
   }
 
   /* Converts STTP headers to Akka-HTTP equivalents. */
-  def toAkkaHeaders(headers: Seq[(String, String)]): Either[Throwable, Seq[HttpHeader]] = {
+  def toAkkaHeaders(headers: List[Header]): Either[Throwable, immutable.Seq[HttpHeader]] = {
     val parsingResults = headers.collect {
-      case (n, v) if !isContentType(n) && !isContentLength(n) => HttpHeader.parse(n, v)
+      case Header(n, v) if !isContentType(n) && !isContentLength(n) => HttpHeader.parse(n, v)
     }
 
-    val errors = parsingResults.collect { case ParsingResult.Error(e) => e}
+    val errors = parsingResults.collect { case ParsingResult.Error(e) => e }
 
     if (errors.isEmpty) {
       parsingResults.collect { case ParsingResult.Ok(httpHeader, _) => httpHeader }.asRight
@@ -43,10 +43,10 @@ object ConvertToAkka {
   }
 
   /* Converts a STTP request body into an Akka-HTTP request with the same body. */
-  def toAkkaRequestBody(body: RequestBody[Observable[ByteString]], headers: Seq[(String, String)], request: HttpRequest)
+  def toAkkaRequestBody(body: RequestBody[Observable[ByteString]], headers: Seq[Header], request: HttpRequest)
                         (implicit scheduler: Scheduler): Either[Throwable, HttpRequest] = {
 
-    val header = headers.collectFirst { case (k, v) if isContentType(k) => v }
+    val header = headers.collectFirst { case Header(k, v) if isContentType(k) => v }
 
     createContentType(header).flatMap { ct =>
       body match {

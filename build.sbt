@@ -1,6 +1,4 @@
-name := "sttp-akka-monix"
-organization := "com.fullfacing"
-
+name         := "sttp-akka-monix"
 version      := "1.0.3"
 scalaVersion := "2.13.1"
 organization := "com.fullfacing"
@@ -37,11 +35,11 @@ scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
 
 val akka: Seq[ModuleID] = Seq(
   "com.typesafe.akka" %% "akka-stream" % "2.6.4",
-  "com.typesafe.akka" %% "akka-http" % "10.1.11"
+  "com.typesafe.akka" %% "akka-http"   % "10.1.11"
 )
 
 val sttp: Seq[ModuleID] = Seq(
-  "com.softwaremill.sttp" %% "core" % "1.7.2",
+  "com.softwaremill.sttp.client" %% "core" % "2.0.6"
 )
 
 val monix: Seq[ModuleID] = Seq(
