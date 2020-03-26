@@ -6,7 +6,7 @@ import akka.util.ByteString
 import monix.eval.Task
 import monix.execution.Scheduler
 import monix.reactive.Observable
-import sttp.client.{BasicResponseAs, IgnoreResponse, MappedResponseAs, Request, Response, ResponseAs, ResponseAsByteArray, ResponseAsFile, ResponseAsFromMetadata, ResponseAsStream, ResponseMetadata}
+import sttp.client.{IgnoreResponse, MappedResponseAs, Request, Response, ResponseAs, ResponseAsByteArray, ResponseAsFile, ResponseAsFromMetadata, ResponseAsStream, ResponseMetadata}
 import sttp.model.{Header, HeaderNames, StatusCode}
 
 import scala.collection.immutable.Seq
@@ -43,7 +43,7 @@ object ConvertToSttp {
                             metadata: ResponseMetadata)
                            (implicit scheduler: Scheduler, mat: Materializer): Task[T] = {
 
-    type R[A] = BasicResponseAs[A, Observable[ByteString]]
+    type R[A] = ResponseAs[A, Observable[ByteString]]
 
     def processBody(body: ResponseAs[T, Observable[ByteString]]): Future[T] = body match {
       case MappedResponseAs(raw: R[T], f) => processBody(raw).map(f(_, metadata))
@@ -56,5 +56,4 @@ object ConvertToSttp {
 
     Task.deferFuture(processBody(sttpBody))
   }
-
 }

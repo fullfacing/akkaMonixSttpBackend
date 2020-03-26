@@ -35,7 +35,7 @@ scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
 
 val akka: Seq[ModuleID] = Seq(
   "com.typesafe.akka" %% "akka-stream" % "2.6.4",
-  "com.typesafe.akka" %% "akka-http" % "10.1.11"
+  "com.typesafe.akka" %% "akka-http"   % "10.1.11"
 )
 
 val sttp: Seq[ModuleID] = Seq(

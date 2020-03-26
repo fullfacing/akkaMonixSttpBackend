@@ -44,9 +44,9 @@ package object utils {
   }
 
   /* Converts an Akka-HTTP response entity into an Observable. */
-  def entityToObservable(entity: ResponseEntity)
-                        (implicit mat: Materializer): Observable[ByteString] =
+  def entityToObservable(entity: ResponseEntity)(implicit mat: Materializer): Observable[ByteString] = {
     Observable.fromReactivePublisher(entity.dataBytes.runWith(Sink.asPublisher[ByteString](fanout = false)))
+  }
 
   /* Discards an Akka-HTTP response entity. */
   def discardEntity(entity: ResponseEntity)(implicit mat: Materializer, scheduler: Scheduler): Future[Unit] = {
@@ -69,6 +69,7 @@ package object utils {
       request.withEntity(FormData(bodyPart: _*).toEntity())
     }
   }
+
   /* Converts a MultiPart to a MultiPartFormData Type. */
   def convertMultiPart(mp: Part[BasicRequestBody]): Either[Throwable, FormData.BodyPart] = {
     for {
@@ -123,11 +124,11 @@ package object utils {
     .getForKey(encoding)
     .fold(ct)(hc => ContentType.apply(ct.mediaType, () => hc))
 
-  /* Checks if it is the correct Content Type type. */
+  /* Checks if it is the correct Content type. */
   def isContentType(headerKey: String): Boolean =
     headerKey.toLowerCase.contains(`Content-Type`.lowercaseName)
 
-  /* Checks if it is the correct Content Type length. */
+  /* Checks if it is the correct Content length. */
   def isContentLength(headerKey: String): Boolean =
     headerKey.toLowerCase.contains(`Content-Length`.lowercaseName)
 }

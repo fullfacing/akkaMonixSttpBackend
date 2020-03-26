@@ -28,7 +28,7 @@ class AkkaMonixHttpBackend(actorSystem: ActorSystem,
   implicit val system: ActorSystem = actorSystem
 
   override def send[T](sttpRequest: Request[T, Observable[ByteString]]): Task[Response[T]] = {
-    implicit val ec: Scheduler = this.ec
+    implicit val sch: Scheduler = ec
 
     val settingsWithProxy = ProxySettings.includeProxy(
       ProxySettings.connectionSettings(actorSystem, options, customConnectionPoolSettings), options
@@ -43,8 +43,8 @@ class AkkaMonixHttpBackend(actorSystem: ActorSystem,
     } yield body.withHeaders(headers)
 
     Task.fromEither(request)
-      .flatMap(req  => client.singleRequest(req, updatedSettings))
-      .flatMap(resp => ConvertToSttp.toSttpResponse(resp, sttpRequest))
+      .flatMap(client.singleRequest(_, updatedSettings))
+      .flatMap(ConvertToSttp.toSttpResponse(_, sttpRequest))
   }
 
   def responseMonad: MonadError[Task] = TaskMonadAsyncError
