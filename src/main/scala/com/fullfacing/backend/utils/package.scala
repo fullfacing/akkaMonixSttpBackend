@@ -17,7 +17,6 @@ import monix.reactive.Observable
 import sttp.client.{BasicRequestBody, ByteArrayBody, ByteBufferBody, FileBody, InputStreamBody, StringBody}
 import sttp.model.Part
 
-import scala.collection.immutable.Seq
 import scala.concurrent.Future
 
 package object utils {

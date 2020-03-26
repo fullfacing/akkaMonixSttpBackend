@@ -9,7 +9,7 @@ import monix.execution.Scheduler
 import monix.reactive.Observable
 import sttp.client.{ByteArrayBody, ByteBufferBody, FileBody, InputStreamBody, MultipartBody, NoBody, RequestBody, StreamBody, StringBody}
 import sttp.model.{Header, Method}
-
+import scala.collection.immutable
 object ConvertToAkka {
 
   /* Converts a HTTP method from STTP to the Akka-HTTP equivalent. */
@@ -27,7 +27,7 @@ object ConvertToAkka {
   }
 
   /* Converts STTP headers to Akka-HTTP equivalents. */
-  def toAkkaHeaders(headers: Seq[Header]): Either[Throwable, Seq[HttpHeader]] = {
+  def toAkkaHeaders(headers: immutable.Seq[Header]): Either[Throwable, immutable.Seq[HttpHeader]] = {
     val parsingResults = headers.collect {
       case Header(n, v) if !isContentType(n) && !isContentLength(n) => HttpHeader.parse(n, v)
     }
