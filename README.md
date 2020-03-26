@@ -10,8 +10,7 @@ The motivation behind creating this backend as opposed to using the existing [Mo
 
 **Installation:**<br/>
 Add the following sbt dependency:<br/>
-Scala 2.12 `"com.fullfacing" %% "sttp-akka-monix" % "1.0.1"`<br/>
-Scala 2.13 `"com.fullfacing" %% "sttp-akka-monix" % "1.0.2"`<br/>
+`"com.fullfacing" %% "sttp-akka-monix" % "1.0.3"`<br/>
 
 **Usage:**<br/>
 Usage is identical to the [Akka-HTTP backend](https://sttp.readthedocs.io/en/latest/backends/akkahttp.html) with only the response type differing:
