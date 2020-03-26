@@ -38,7 +38,7 @@ class AkkaMonixHttpBackend(actorSystem: ActorSystem,
     val partialRequest  = HttpRequest(uri = sttpRequest.uri.toString, method = requestMethod)
 
     val request = for {
-      headers <- ConvertToAkka.toAkkaHeaders(sttpRequest.headers)
+      headers <- ConvertToAkka.toAkkaHeaders(sttpRequest.headers.toList)
       body    <- ConvertToAkka.toAkkaRequestBody(sttpRequest.body, sttpRequest.headers, partialRequest)
     } yield body.withHeaders(headers)
 
