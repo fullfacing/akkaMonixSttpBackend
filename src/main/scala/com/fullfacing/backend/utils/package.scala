@@ -73,7 +73,7 @@ package object utils {
   def convertMultiPart(mp: Part[BasicRequestBody]): Either[Throwable, FormData.BodyPart] = {
     for {
       ct      <- createContentType(mp.contentType)
-      headers <- ConvertToAkka.toAkkaHeaders(mp.headers)
+      headers <- ConvertToAkka.toAkkaHeaders(mp.headers.toList)
     } yield {
       val fileName  = mp.fileName.fold(Map.empty[String, String])(fn => Map("filename" -> fn))
       val bodyPart  = createBodyPartEntity(ct, mp.body)
