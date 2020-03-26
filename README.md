@@ -8,9 +8,8 @@ akkaMonixSttpBackend is a backend for [sttp](https://sttp.readthedocs.io/en/late
 
 The motivation behind creating this backend as opposed to using the existing [Monix wrapped async-http-client backend](https://sttp.readthedocs.io/en/latest/backends/asynchttpclient.html) is to give an alternative for projects that already have Akka-HTTP as a dependency, removing the need for the async-http-client dependency as well.
 
-**Installation:**<br/>
-Add the following sbt dependency:<br/>
-`"com.fullfacing" %% "sttp-akka-monix" % "1.0.3"`<br/>
+**Installation:**<br/> Add the following sbt dependency:<br/>
+`"com.fullfacing" %% "sttp-akka-monix" % "1.1.0"`<br/>
 
 **Usage:**<br/>
 Usage is identical to the [Akka-HTTP backend](https://sttp.readthedocs.io/en/latest/backends/akkahttp.html) with only the response type differing:
