@@ -1,5 +1,5 @@
 name         := "sttp-akka-monix"
-version      := "1.0.3"
+version      := "1.1.0"
 scalaVersion := "2.13.1"
 organization := "com.fullfacing"
 
