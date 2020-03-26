@@ -10,8 +10,6 @@ import monix.reactive.Observable
 import sttp.client.{ByteArrayBody, ByteBufferBody, FileBody, InputStreamBody, MultipartBody, NoBody, RequestBody, StreamBody, StringBody}
 import sttp.model.{Header, Method}
 
-import scala.collection.immutable.Seq
-
 object ConvertToAkka {
 
   /* Converts a HTTP method from STTP to the Akka-HTTP equivalent. */
