@@ -39,7 +39,7 @@ val akka: Seq[ModuleID] = Seq(
 )
 
 val sttp: Seq[ModuleID] = Seq(
-  "com.softwaremill.sttp.client" %% "core" % "2.0.6"
+  "com.softwaremill.sttp.client" %% "core" % "2.0.7"
 )
 
 val monix: Seq[ModuleID] = Seq(
