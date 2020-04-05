@@ -7,12 +7,12 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: sbt-cache
+          key: sbt-cache-0
       - run:
           name: Compile JAR
           command: sbt ++2.12.10! clean update compile
       - save_cache:
-          key: sbt-cache
+          key: sbt-cache-0
           paths:
             - "~/.m2"
             - "~/.sbt"
@@ -25,12 +25,12 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: sbt-cache
+          key: sbt-cache-0
       - run:
           name: Compile JAR
           command: sbt ++2.13.1! clean update compile
       - save_cache:
-          key: sbt-cache
+          key: sbt-cache-0
           paths:
             - "~/.m2"
             - "~/.sbt"
@@ -42,7 +42,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: sbt-cache
+          key: sbt-cache-0
       - run:
           name: Get PGP Key
           command: echo -e "$PGP_KEY" | gpg --import
@@ -50,7 +50,7 @@ jobs:
           name: Compile JAR
           command: sbt release
       - save_cache:
-          key: sbt-cache
+          key: sbt-cache-0
           paths:
             - "~/.m2"
             - "~/.sbt"
