@@ -45,7 +45,9 @@ jobs:
           key: sbt-cache-0
       - run:
           name: Get PGP Key
-          command: echo -e "$PGP_KEY" | gpg --import
+          command: |
+            gpg --no-tty --batch --passphrase "$GPG_PASSPHRASE" --pinentry-mode loopback --output ./key.asc --decrypt ./circleci/key.asc.pgp
+            gpg --import /key.asc
       - run:
           name: Compile JAR
           command: sbt release
