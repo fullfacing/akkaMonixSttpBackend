@@ -18,11 +18,11 @@ import sttp.client.{FollowRedirectsBackend, NothingT, Request, Response, SttpBac
 import scala.concurrent.Future
 
 class AkkaMonixBioHttpBackend(actorSystem: ActorSystem,
-                           ec: Scheduler,
-                           terminateActorSystemOnClose: Boolean,
-                           options: SttpBackendOptions,
-                           client: AkkaMonixBioHttpClient,
-                           customConnectionPoolSettings: Option[ConnectionPoolSettings])
+                              ec: Scheduler,
+                              terminateActorSystemOnClose: Boolean,
+                              options: SttpBackendOptions,
+                              client: AkkaMonixBioHttpClient,
+                              customConnectionPoolSettings: Option[ConnectionPoolSettings])
   extends SttpBackend[Task, Observable[ByteString], NothingT] {
 
   /* Initiates the Akka Actor system. */
