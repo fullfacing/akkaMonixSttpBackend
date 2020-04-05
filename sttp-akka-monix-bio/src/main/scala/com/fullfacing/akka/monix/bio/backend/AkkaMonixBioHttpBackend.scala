@@ -7,7 +7,7 @@ import akka.http.scaladsl.model.HttpRequest
 import akka.http.scaladsl.settings.ConnectionPoolSettings
 import akka.util.ByteString
 import com.fullfacing.akka.monix.bio.backend.utils.{BioMonadAsyncError, ConvertToSttp}
-import com.fullfacing.sttp.akka.monix.core.{ConvertToAkka, ProxySettings}
+import com.fullfacing.akka.monix.core.{ConvertToAkka, ProxySettings}
 import monix.bio.{BIO, Task}
 import monix.execution.Scheduler
 import monix.reactive.Observable

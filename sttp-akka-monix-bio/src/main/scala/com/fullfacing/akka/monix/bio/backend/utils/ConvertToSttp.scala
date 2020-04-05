@@ -3,7 +3,7 @@ package com.fullfacing.akka.monix.bio.backend.utils
 import akka.http.scaladsl.model.HttpResponse
 import akka.stream.Materializer
 import akka.util.ByteString
-import com.fullfacing.sttp.akka.monix.core._
+import com.fullfacing.akka.monix.core._
 import monix.bio.Task
 import monix.execution.Scheduler
 import monix.reactive.Observable

@@ -1,4 +1,4 @@
-package com.fullfacing.sttp.akka.monix
+package com.fullfacing.akka.monix
 
 import java.io.{File, UnsupportedEncodingException}
 import java.nio.ByteBuffer
