@@ -1,29 +1,13 @@
-version: 2
+version: 2.1
 jobs:
   compile212:
-    working_directory: /code
     docker:
-      - image: openjdk:11
-    environment:
-      - SBT_VERSION: 1.3.8
+      - image: circleci/openjdk:latest
+    working_directory: ~/code
     steps:
-      - run:
-          name: Install SBT
-          command: |
-            apt update && apt install -y curl
-            curl -L -o sbt-$SBT_VERSION.deb https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb
-            dpkg -i sbt-$SBT_VERSION.deb
-            rm sbt-$SBT_VERSION.deb
-            apt-get update
-            apt-get install -y sbt git
-            apt-get clean && apt-get autoclean
       - checkout
       - restore_cache:
           key: sbt-cache
-      - run:
-          name: Create Artifact Directory
-          command: |
-            mkdir -p workspace
       - run:
           name: Compile JAR
           command: sbt ++2.12.10! clean update compile
@@ -34,29 +18,14 @@ jobs:
             - "~/.sbt"
             - "~/.ivy2/cache"
   compile213:
-    working_directory: /code
+    working_directory: ~/code
     docker:
-      - image: openjdk:11
+      - image: circleci/openjdk:latest
     environment:
-      - SBT_VERSION: 1.3.8
     steps:
-      - run:
-          name: Install SBT
-          command: |
-            apt update && apt install -y curl
-            curl -L -o sbt-$SBT_VERSION.deb https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb
-            dpkg -i sbt-$SBT_VERSION.deb
-            rm sbt-$SBT_VERSION.deb
-            apt-get update
-            apt-get install -y sbt git
-            apt-get clean && apt-get autoclean
       - checkout
       - restore_cache:
           key: sbt-cache
-      - run:
-          name: Create Artifact Directory
-          command: |
-            mkdir -p workspace
       - run:
           name: Compile JAR
           command: sbt ++2.13.1! clean update compile
@@ -66,9 +35,41 @@ jobs:
             - "~/.m2"
             - "~/.sbt"
             - "~/.ivy2/cache"
+  Publish-And-Release:
+    docker:
+      - image: circleci/openjdk:latest
+    working_directory: ~/code
+    steps:
+      - checkout
+      - restore_cache:
+          key: sbt-cache
+      - run:
+          name: Get PGP Key
+          command: echo -e "$PGP_KEY" | gpg --import
+      - run:
+          name: Compile JAR
+          command: sbt release
+      - save_cache:
+          key: sbt-cache
+          paths:
+            - "~/.m2"
+            - "~/.sbt"
+            - "~/.ivy2/cache"
 workflows:
-  version: 2
   deployment:
     jobs:
-      - compile212
-      - compile213
+      - compile212:
+          filters:
+            branches:
+              only:
+                - develop
+      - compile213:
+          filters:
+            branches:
+              only:
+                - develop
+      - Publish-And-Release:
+          filters:
+            branches:
+              only:
+                - master

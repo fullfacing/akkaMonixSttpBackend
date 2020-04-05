@@ -1,4 +1,6 @@
 import sbt.Keys.{publishLocalConfiguration, scalaVersion}
+import ReleaseTransformations._
+
 import sbt.url
 import xerial.sbt.Sonatype.GitHubHosting
 
@@ -31,7 +33,13 @@ lazy val global = {
     scalaVersion := scalaV,
     crossScalaVersions := Seq(scalaVersion.value, "2.12.10"),
     scalacOptions ++= scalacOpts ++ (CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((2, n)) if n <= 12 => scalacOpts ++ Seq("-Ypartial-unification")
+      case Some((2, n)) if n <= 12 =>
+        scalacOpts ++ Seq(
+          "-Ypartial-unification",
+          "-Xfuture",
+          "-Yno-adapted-args",
+          "-Ywarn-unused-import"
+        )
       case _ => scalacOpts
     }),
     resolvers ++= Seq(
@@ -79,6 +87,23 @@ lazy val global = {
         email = "rpeters@fullfacing.com",
         url   = url("https://www.fullfacing.com/")
       )
+    ),
+
+    releaseCrossBuild := true, // true if you cross-build the project for multiple Scala versions
+    releaseProcess := Seq[ReleaseStep](
+      checkSnapshotDependencies,
+      inquireVersions,
+      runClean,
+      runTest,
+      setReleaseVersion,
+      commitReleaseVersion,
+      tagRelease,
+      // For non cross-build projects, use releaseStepCommand("publishSigned")
+      releaseStepCommandAndRemaining("+publishSigned"),
+      releaseStepCommand("sonatypeBundleRelease"),
+      setNextVersion,
+      commitNextVersion,
+      pushChanges
     )
   )
 }
