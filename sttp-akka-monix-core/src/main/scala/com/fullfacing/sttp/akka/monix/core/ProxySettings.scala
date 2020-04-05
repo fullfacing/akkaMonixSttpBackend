@@ -1,4 +1,4 @@
-package com.fullfacing.backend.utils
+package com.fullfacing.sttp.akka.monix.core
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.ClientTransport

@@ -1,4 +1,4 @@
-package com.fullfacing.backend
+package com.fullfacing.akka.monix.task.backend
 
 import akka.actor.ActorSystem
 import akka.event.LoggingAdapter
