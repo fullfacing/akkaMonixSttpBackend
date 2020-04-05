@@ -1,4 +1,4 @@
-package com.fullfacing.backend
+package com.fullfacing.akka.monix.task.backend
 
 import akka.actor.ActorSystem
 import akka.event.LoggingAdapter
@@ -6,7 +6,8 @@ import akka.http.scaladsl.HttpsConnectionContext
 import akka.http.scaladsl.model.HttpRequest
 import akka.http.scaladsl.settings.ConnectionPoolSettings
 import akka.util.ByteString
-import com.fullfacing.backend.utils.{ConvertToAkka, ConvertToSttp, ProxySettings, TaskMonadAsyncError}
+import com.fullfacing.akka.monix.core.{ConvertToAkka, ProxySettings}
+import com.fullfacing.akka.monix.task.backend.utils.{ConvertToSttp, TaskMonadAsyncError}
 import monix.eval.Task
 import monix.execution.Scheduler
 import monix.reactive.Observable

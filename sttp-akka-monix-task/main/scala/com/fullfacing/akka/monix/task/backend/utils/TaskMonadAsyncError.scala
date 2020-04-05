@@ -1,4 +1,4 @@
-package com.fullfacing.backend.utils
+package com.fullfacing.akka.monix.task.backend.utils
 
 import monix.eval.Task
 import sttp.client.monad.{Canceler, MonadAsyncError}

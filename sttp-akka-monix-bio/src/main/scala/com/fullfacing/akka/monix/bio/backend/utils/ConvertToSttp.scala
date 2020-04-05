@@ -1,9 +1,10 @@
-package com.fullfacing.backend.utils
+package com.fullfacing.akka.monix.bio.backend.utils
 
 import akka.http.scaladsl.model.HttpResponse
 import akka.stream.Materializer
 import akka.util.ByteString
-import monix.eval.Task
+import com.fullfacing.akka.monix.core._
+import monix.bio.Task
 import monix.execution.Scheduler
 import monix.reactive.Observable
 import sttp.client.{IgnoreResponse, MappedResponseAs, Request, Response, ResponseAs, ResponseAsByteArray, ResponseAsFile, ResponseAsFromMetadata, ResponseAsStream, ResponseMetadata}
@@ -26,7 +27,7 @@ object ConvertToSttp {
 
   /* Converts an Akka-HTTP response to a STTP equivalent. */
   def toSttpResponse[T](response: HttpResponse, sttpRequest: Request[T, Observable[ByteString]])
-                         (implicit scheduler: Scheduler, mat: Materializer): Task[Response[T]] = {
+                       (implicit scheduler: Scheduler, mat: Materializer): Task[Response[T]] = {
     val statusCode   = StatusCode.notValidated(response.status.intValue())
     val statusText   = response.status.reason()
     val respHeaders  = toSttpHeaders(response)

@@ -1,4 +1,4 @@
-package com.fullfacing.backend.utils
+package com.fullfacing.akka.monix.core
 
 import akka.http.scaladsl.model.HttpHeader.ParsingResult
 import akka.http.scaladsl.model._
@@ -9,6 +9,7 @@ import monix.execution.Scheduler
 import monix.reactive.Observable
 import sttp.client.{ByteArrayBody, ByteBufferBody, FileBody, InputStreamBody, MultipartBody, NoBody, RequestBody, StreamBody, StringBody}
 import sttp.model.{Header, Method}
+
 import scala.collection.immutable
 
 object ConvertToAkka {

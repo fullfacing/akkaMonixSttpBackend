@@ -1,4 +1,4 @@
-package com.fullfacing.backend
+package com.fullfacing.akka.monix
 
 import java.io.{File, UnsupportedEncodingException}
 import java.nio.ByteBuffer
@@ -19,7 +19,7 @@ import sttp.model.Part
 
 import scala.concurrent.Future
 
-package object utils {
+package object core {
 
   /* Converts an Akka-HTTP response entity into a byte array. */
   def entityToByteArray(entity: ResponseEntity)(implicit scheduler: Scheduler, mat: Materializer): Future[Array[Byte]] = {
