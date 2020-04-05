@@ -46,7 +46,7 @@ jobs:
       - run:
           name: Get PGP Key
           command: |
-            gpg --no-tty --batch --passphrase "$GPG_PASSPHRASE" --pinentry-mode loopback --output ~/key.asc --decrypt ~/code/circleci/key.asc.gpg
+            gpg --no-tty --batch --passphrase "$PGP_PASSPHRASE" --pinentry-mode loopback --output ~/key.asc --decrypt ~/code/circleci/key.asc.gpg
             gpg --import ~key.asc
       - run:
           name: Compile JAR
