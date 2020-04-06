@@ -53,7 +53,7 @@ jobs:
             gpg --import key.asc
       - run:
           name: Compile JAR
-          command: sbt 'release cross with-defaults'
+          command: sbt release with-defaults
       - save_cache:
           key: sbt-cache-0
           paths:
