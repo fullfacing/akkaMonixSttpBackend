@@ -56,9 +56,6 @@ lazy val global = {
     // Your profile name of the sonatype account. The default is the same with the organization value
     sonatypeProfileName := "com.fullfacing",
 
-    // Sonatype Nexus Credentials
-    credentials += Credentials(Path.userHome / ".sbt" / "1.0" / ".credentials"),
-
     // To sync with Maven central, you need to supply the following information:
     publishMavenStyle := true,
 
