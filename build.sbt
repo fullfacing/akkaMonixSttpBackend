@@ -100,7 +100,6 @@ lazy val global = {
       runClean,
       runTest,
       setReleaseVersion,
-      tagRelease,
       releaseStepCommandAndRemaining("+publishSigned"),
       releaseStepCommand("sonatypeBundleRelease"),
       setNextVersion,
