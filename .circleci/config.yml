@@ -45,7 +45,7 @@ jobs:
           key: sbt-cache-0
       - run:
           name: Compile JAR
-          command: sbt release
+          command: sbt 'release cross with-defaults'
       - save_cache:
           key: sbt-cache-0
           paths:
