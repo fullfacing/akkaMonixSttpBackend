@@ -90,6 +90,7 @@ lazy val global = {
       )
     ),
 
+    releaseIgnoreUntrackedFiles := true,
     releasePublishArtifactsAction := PgpKeys.publishSigned.value,
     releaseCrossBuild := true,
     releaseVersionBump := sbtrelease.Version.Bump.Minor,
