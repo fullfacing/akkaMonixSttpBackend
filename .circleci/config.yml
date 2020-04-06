@@ -46,9 +46,9 @@ jobs:
       - run:
           name: Import PGP Key
           command: |
-            sudo apt-get update
-            sudo apt-get install dos2unix
-            echo -e "$GPG_KEY" > key.asc
+            apt-get update
+            apt-get install -y dos2unix
+            echo -e "$PGP_KEY" > key.asc
             dos2unix key.asc
             gpg --import key.asc
       - run:
