@@ -42,15 +42,20 @@ lazy val global = {
         )
       case _ => scalacOpts
     }),
-    resolvers ++= Seq(
-      Resolver.sonatypeRepo("releases"),
-    ),
+    addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
+    addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full),
+    resolvers ++= Seq(Resolver.sonatypeRepo("releases")),
     libraryDependencies ++= akka ++ monix ++ sttp,
+
+    useGpg := false,
+    usePgpKeyHex("A98366FADA36CECD"),
+    pgpPublicRing := baseDirectory.value / "project" / ".gnupg" / "pubring.gpg",
+    pgpSecretRing := baseDirectory.value / "project" / ".gnupg" / "secring.gpg",
+    pgpPassphrase := sys.env.get("PGP_PASS").map(_.toArray),
+
     publishTo := sonatypePublishToBundle.value,
     publishConfiguration := publishConfiguration.value.withOverwrite(true),
     publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true),
-    addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
-    addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full),
 
     // Your profile name of the sonatype account. The default is the same with the organization value
     sonatypeProfileName := "com.fullfacing",
