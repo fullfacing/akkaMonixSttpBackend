@@ -100,13 +100,10 @@ lazy val global = {
       runClean,
       runTest,
       setReleaseVersion,
-      commitReleaseVersion,
       tagRelease,
       releaseStepCommandAndRemaining("+publishSigned"),
       releaseStepCommand("sonatypeBundleRelease"),
       setNextVersion,
-      commitNextVersion,
-      pushChanges
     )
   )
 }
