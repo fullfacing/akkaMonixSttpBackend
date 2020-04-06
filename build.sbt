@@ -47,7 +47,6 @@ lazy val global = {
     resolvers ++= Seq(Resolver.sonatypeRepo("releases")),
     libraryDependencies ++= akka ++ monix ++ sttp,
 
-
     pgpKeyRing := Some(baseDirectory.value / "project" / ".gnupg" / "pubring.gpg"),
     credentials += Credentials("GnuPG Key ID", "gpg", "A98366FADA36CECD", "ignored"),
 
@@ -92,7 +91,9 @@ lazy val global = {
       )
     ),
 
-    releaseCrossBuild := true, // true if you cross-build the project for multiple Scala versions
+    releasePublishArtifactsAction := PgpKeys.publishSigned.value,
+    releaseCrossBuild := true,
+    releaseVersionBump := sbtrelease.Version.Bump.Minor,
     releaseProcess := Seq[ReleaseStep](
       checkSnapshotDependencies,
       inquireVersions,
@@ -101,7 +102,6 @@ lazy val global = {
       setReleaseVersion,
       commitReleaseVersion,
       tagRelease,
-      // For non cross-build projects, use releaseStepCommand("publishSigned")
       releaseStepCommandAndRemaining("+publishSigned"),
       releaseStepCommand("sonatypeBundleRelease"),
       setNextVersion,
