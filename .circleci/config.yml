@@ -43,9 +43,9 @@ jobs:
       - checkout
       - restore_cache:
           key: sbt-cache-0
-      - run: |
-          echo $PGP_KEY > sec-key.asc
-          gpg --import sec-key.asc
+      - run:
+          name: import GPG key
+          command: echo -e "$GPG_KEY" | gpg --import
       - run:
           name: Compile JAR
           command: sbt 'release cross with-defaults'
