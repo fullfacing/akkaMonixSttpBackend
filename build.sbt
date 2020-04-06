@@ -47,11 +47,9 @@ lazy val global = {
     resolvers ++= Seq(Resolver.sonatypeRepo("releases")),
     libraryDependencies ++= akka ++ monix ++ sttp,
 
-    useGpg := false,
-    usePgpKeyHex("A98366FADA36CECD"),
-    pgpPublicRing := baseDirectory.value / "project" / ".gnupg" / "pubring.gpg",
-    pgpSecretRing := baseDirectory.value / "project" / ".gnupg" / "secring.gpg",
-    pgpPassphrase := sys.env.get("PGP_PASS").map(_.toArray),
+
+    pgpKeyRing := baseDirectory.value / "project" / ".gnupg" / "pubring.gpg",
+    credentials += Credentials("GnuPG Key ID", "gpg", "A98366FADA36CECD", "ignored"),
 
     publishTo := sonatypePublishToBundle.value,
     publishConfiguration := publishConfiguration.value.withOverwrite(true),
