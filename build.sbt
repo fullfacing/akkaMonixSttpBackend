@@ -48,7 +48,7 @@ lazy val global = {
     libraryDependencies ++= akka ++ monix ++ sttp,
 
 
-    pgpKeyRing := baseDirectory.value / "project" / ".gnupg" / "pubring.gpg",
+    pgpKeyRing := Some(baseDirectory.value / "project" / ".gnupg" / "pubring.gpg"),
     credentials += Credentials("GnuPG Key ID", "gpg", "A98366FADA36CECD", "ignored"),
 
     publishTo := sonatypePublishToBundle.value,
