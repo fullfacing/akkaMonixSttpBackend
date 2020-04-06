@@ -47,7 +47,7 @@ lazy val global = {
     resolvers ++= Seq(Resolver.sonatypeRepo("releases")),
     libraryDependencies ++= akka ++ monix ++ sttp,
 
-    credentials += Credentials("GnuPG Key ID", "gpg", "A98366FADA36CECD", "ignored"),
+    credentials += Credentials("GnuPG Key ID", "gpg", "419C90FB607D11B0A7FE51CFDAF842ABC601C14F", "ignored"),
 
     publishTo := sonatypePublishToBundle.value,
     publishConfiguration := publishConfiguration.value.withOverwrite(true),

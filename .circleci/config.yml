@@ -44,8 +44,13 @@ jobs:
       - restore_cache:
           key: sbt-cache-0
       - run:
-          name: import GPG key
-          command: echo -e "$GPG_KEY" | gpg --import
+          name: Import PGP Key
+          command: |
+            sudo apt-get update
+            sudo apt-get install dos2unix
+            echo -e "$GPG_KEY" > key.asc
+            dos2unix key.asc
+            gpg --import key.asc
       - run:
           name: Compile JAR
           command: sbt 'release cross with-defaults'
