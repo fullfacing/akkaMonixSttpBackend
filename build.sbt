@@ -28,7 +28,6 @@ val scalacOpts = Seq(
 // Global sbt project settings.
 lazy val global = {
   Seq(
-    version := "1.2.0",
     organization := "com.fullfacing",
     scalaVersion := scalaV,
     crossScalaVersions := Seq(scalaVersion.value, "2.12.10"),
