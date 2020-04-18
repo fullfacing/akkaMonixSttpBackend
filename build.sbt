@@ -109,7 +109,7 @@ val akka: Seq[ModuleID] = Seq(
 )
 
 val sttp: Seq[ModuleID] = Seq(
-  "com.softwaremill.sttp.client" %% "core" % "2.0.7"
+  "com.softwaremill.sttp.client" %% "core" % "2.0.8"
 )
 
 val monix: Seq[ModuleID] = Seq(
@@ -140,6 +140,7 @@ lazy val root = (project in file("."))
   .settings(global: _*)
   .settings(publishArtifact := false)
   .aggregate(
+    `sttp-akka-monix-core`,
     `sttp-akka-monix-task`,
     `sttp-akka-monix-bio`
   )
