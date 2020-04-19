@@ -94,13 +94,32 @@ lazy val global = {
       checkSnapshotDependencies,
       inquireVersions,
       runClean,
-      runTest,
       setReleaseVersion,
+      tagRelease,
+      pushChanges,
       releaseStepCommandAndRemaining("+publishSigned"),
       releaseStepCommand("sonatypeBundleRelease"),
+      swapToDevelopAction,
       setNextVersion,
+      commitNextVersion,
+      pushChanges
     )
   )
+}
+
+import sbtrelease.Git
+import sbtrelease.ReleasePlugin.autoImport._
+import sbtrelease.Utilities._
+
+def swapToDevelop: State => State = { st: State =>
+  val git = st.extract.get(releaseVcs).get.asInstanceOf[Git]
+  git.cmd("checkout", "develop") ! st.log
+  st
+}
+
+lazy val swapToDevelopAction = { st: State =>
+  val newState = swapToDevelop(st)
+  newState
 }
 
 val akka: Seq[ModuleID] = Seq(
