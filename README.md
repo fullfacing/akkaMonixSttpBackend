@@ -15,12 +15,12 @@ The motivation behind creating this backend as opposed to using the existing [Mo
 Usage is identical to the [Akka-HTTP backend](https://sttp.readthedocs.io/en/latest/backends/akkahttp.html) with only the response type differing:
 ```scala
 import akka.util.ByteString
-import com.fullfacing.backend.AkkaMonixHttpBackend
-import com.softwaremill.sttp.{Response, SttpBackend, _}
+import com.fullfacing.akka.monix.task.backend.AkkaMonixHttpBackend
+import sttp.client.{Response, SttpBackend, _}
 import monix.eval.Task
 import monix.reactive.Observable
 
-implicit val backend: SttpBackend[Task, Observable[ByteString]] = AkkaMonixHttpBackend()
+implicit val backend: SttpBackend[Task, Observable[ByteString], NothingT] = AkkaMonixHttpBackend()
 
 // To set the request body as a stream:
 val observable: Observable[ByteString] = ???
