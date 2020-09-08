@@ -8,7 +8,7 @@ import akka.http.scaladsl.settings.ConnectionPoolSettings
 import akka.util.ByteString
 import com.fullfacing.akka.monix.bio.backend.utils.{BioMonadAsyncError, ConvertToSttp}
 import com.fullfacing.akka.monix.core.{ConvertToAkka, ProxySettings}
-import monix.bio.{BIO, Task}
+import monix.bio.{IO, Task}
 import monix.execution.Scheduler
 import monix.reactive.Observable
 import sttp.client.monad.MonadError
@@ -43,7 +43,7 @@ class AkkaMonixBioHttpBackend(actorSystem: ActorSystem,
       body    <- ConvertToAkka.toAkkaRequestBody(sttpRequest.body, sttpRequest.headers, partialRequest)
     } yield body.withHeaders(headers)
 
-    BIO.fromEither(request)
+    IO.fromEither(request)
       .flatMap(client.singleRequest(_, updatedSettings))
       .flatMap(ConvertToSttp.toSttpResponse(_, sttpRequest))
   }
