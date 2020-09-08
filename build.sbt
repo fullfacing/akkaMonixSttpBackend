@@ -123,20 +123,20 @@ lazy val swapToDevelopAction = { st: State =>
 }
 
 val akka: Seq[ModuleID] = Seq(
-  "com.typesafe.akka" %% "akka-stream" % "2.6.4",
-  "com.typesafe.akka" %% "akka-http" % "10.1.11"
+  "com.typesafe.akka" %% "akka-stream" % "2.6.8",
+  "com.typesafe.akka" %% "akka-http" % "10.2.0"
 )
 
 val sttp: Seq[ModuleID] = Seq(
-  "com.softwaremill.sttp.client" %% "core" % "2.0.9"
+  "com.softwaremill.sttp.client" %% "core" % "2.2.4"
 )
 
 val monix: Seq[ModuleID] = Seq(
-  "io.monix" %% "monix" % "3.1.0"
+  "io.monix" %% "monix" % "3.2.2"
 )
 
 val `monix-bio`: Seq[ModuleID] = Seq(
-  "io.monix" %% "monix-bio" % "0.1.0"
+  "io.monix" %% "monix-bio" % "1.0.0"
 )
 
 lazy val `sttp-akka-monix-core` = (project in file("./sttp-akka-monix-core"))
