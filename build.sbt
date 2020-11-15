@@ -136,7 +136,7 @@ val monix: Seq[ModuleID] = Seq(
 )
 
 val `monix-bio`: Seq[ModuleID] = Seq(
-  "io.monix" %% "monix-bio" % "1.0.0"
+  "io.monix" %% "monix-bio" % "1.1.0"
 )
 
 lazy val `sttp-akka-monix-core` = (project in file("./sttp-akka-monix-core"))
