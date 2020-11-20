@@ -123,8 +123,8 @@ lazy val swapToDevelopAction = { st: State =>
 }
 
 val akka: Seq[ModuleID] = Seq(
-  "com.typesafe.akka" %% "akka-stream" % "2.6.9",
-  "com.typesafe.akka" %% "akka-http" % "10.2.1"
+  "com.typesafe.akka" %% "akka-stream" % "2.6.10",
+  "com.typesafe.akka" %% "akka-http"   % "10.2.1"
 )
 
 val sttp: Seq[ModuleID] = Seq(
