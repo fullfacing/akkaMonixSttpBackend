@@ -42,7 +42,7 @@ lazy val global = {
       case _ => scalacOpts
     }),
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
-    addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full),
+    addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.1" cross CrossVersion.full),
     resolvers ++= Seq(Resolver.sonatypeRepo("releases")),
     libraryDependencies ++= akka ++ monix ++ sttp,
 
@@ -124,19 +124,19 @@ lazy val swapToDevelopAction = { st: State =>
 
 val akka: Seq[ModuleID] = Seq(
   "com.typesafe.akka" %% "akka-stream" % "2.6.10",
-  "com.typesafe.akka" %% "akka-http" % "10.2.0"
+  "com.typesafe.akka" %% "akka-http"   % "10.2.1"
 )
 
 val sttp: Seq[ModuleID] = Seq(
-  "com.softwaremill.sttp.client" %% "core" % "2.2.8"
+  "com.softwaremill.sttp.client" %% "core" % "2.2.9"
 )
 
 val monix: Seq[ModuleID] = Seq(
-  "io.monix" %% "monix" % "3.2.2"
+  "io.monix" %% "monix" % "3.3.0"
 )
 
 val `monix-bio`: Seq[ModuleID] = Seq(
-  "io.monix" %% "monix-bio" % "1.0.0"
+  "io.monix" %% "monix-bio" % "1.1.0"
 )
 
 lazy val `sttp-akka-monix-core` = (project in file("./sttp-akka-monix-core"))
