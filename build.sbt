@@ -42,7 +42,7 @@ lazy val global = {
       case _ => scalacOpts
     }),
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
-    addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.2" cross CrossVersion.full),
+    addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.3" cross CrossVersion.full),
     resolvers ++= Seq(Resolver.sonatypeRepo("releases")),
     libraryDependencies ++= akka ++ monix ++ sttp,
 
@@ -123,7 +123,7 @@ lazy val swapToDevelopAction = { st: State =>
 }
 
 val akka: Seq[ModuleID] = Seq(
-  "com.typesafe.akka" %% "akka-stream" % "2.6.10",
+  "com.typesafe.akka" %% "akka-stream" % "2.6.13",
   "com.typesafe.akka" %% "akka-http"   % "10.2.4"
 )
 
