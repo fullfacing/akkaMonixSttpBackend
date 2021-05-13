@@ -42,7 +42,7 @@ lazy val global = {
       case _ => scalacOpts
     }),
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
-    addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.3" cross CrossVersion.full),
+    addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.12.0" cross CrossVersion.full),
     resolvers ++= Seq(Resolver.sonatypeRepo("releases")),
     libraryDependencies ++= akka ++ monix ++ sttp,
 
