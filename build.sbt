@@ -30,7 +30,7 @@ lazy val global = {
   Seq(
     organization := "com.fullfacing",
     scalaVersion := scalaV,
-    crossScalaVersions := Seq(scalaVersion.value, "2.12.13"),
+    crossScalaVersions := Seq(scalaVersion.value, "2.12.14"),
     scalacOptions ++= scalacOpts ++ (CrossVersion.partialVersion(scalaVersion.value) match {
       case Some((2, n)) if n <= 12 =>
         scalacOpts ++ Seq(
