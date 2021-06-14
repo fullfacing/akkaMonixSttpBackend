@@ -2,6 +2,7 @@ package com.fullfacing.akka.monix.task.backend.utils
 
 import cats.implicits._
 import monix.eval.Task
+import sttp.monad.{Canceler, MonadAsyncError}
 
 import scala.util.{Failure, Success}
 

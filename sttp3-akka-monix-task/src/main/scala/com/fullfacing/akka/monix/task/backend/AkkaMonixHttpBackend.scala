@@ -13,7 +13,8 @@ import monix.eval.Task
 import monix.execution.Scheduler
 import monix.reactive.Observable
 import sttp.capabilities
-import sttp.client3.{Request, Response, SttpBackend, SttpBackendOptions}
+import sttp.client3.{FollowRedirectsBackend, Request, Response, SttpBackend, SttpBackendOptions}
+import sttp.monad.MonadError
 
 import scala.concurrent.Future
 
@@ -47,7 +48,7 @@ class AkkaMonixHttpBackend(actorSystem: ActorSystem,
 
     Task.fromEither(request)
       .flatMap(client.singleRequest(_, updatedSettings))
-      .flatMap(ConvertToSttp.toSttpResponse(_, sttpRequest)(bodyFromAkka))
+      .flatMap(ConvertToSttp.toSttpResponse[T, R](_, sttpRequest)(bodyFromAkka))
   }
 
   def responseMonad: MonadError[Task] = TaskMonadAsyncError

@@ -22,7 +22,7 @@ import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.util.Failure
 import scala.util.chaining.scalaUtilChainingOps
 
-private[akkahttp] class BodyFromAkka()(implicit ec: ExecutionContext, mat: Materializer, m: MonadError[Task]) {
+final class BodyFromAkka()(implicit ec: ExecutionContext, mat: Materializer, m: MonadError[Task]) {
 
   def apply[T, R](responseAs: ResponseAs[T, R],
                   meta: ResponseMetadata,

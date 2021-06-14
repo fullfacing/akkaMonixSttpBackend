@@ -48,7 +48,7 @@ class AkkaMonixBioHttpBackend(actorSystem: ActorSystem,
 
     IO.fromEither(request)
       .flatMap(client.singleRequest(_, updatedSettings))
-      .flatMap(ConvertToSttp.toSttpResponse(_, sttpRequest)(bodyFromAkka))
+      .flatMap(ConvertToSttp.toSttpResponse[T, R](_, sttpRequest)(bodyFromAkka))
   }
 
   def responseMonad: MonadError[Task] = BioMonadAsyncError

@@ -22,7 +22,7 @@ import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.util.Failure
 import scala.util.chaining.scalaUtilChainingOps
 
-private[akkahttp] class BodyFromAkka()(implicit ec: ExecutionContext, mat: Materializer, m: MonadError[Task]) {
+final class BodyFromAkka()(implicit ec: ExecutionContext, mat: Materializer, m: MonadError[Task]) {
 
   def apply[T, R](responseAs: ResponseAs[T, R],
                   meta: ResponseMetadata,
@@ -39,12 +39,12 @@ private[akkahttp] class BodyFromAkka()(implicit ec: ExecutionContext, mat: Mater
           case Right(file)     => HttpEntity.fromFile(response.entity.contentType, file.toFile)
         }
 
-        Task.deferFuture(Future.successful(response.withEntity(replayEntity)))
+        Task.now(response.withEntity(replayEntity))
       }
 
       override protected def regularIgnore(response: HttpResponse): Task[Unit] = {
         // todo: Replace with HttpResponse#discardEntityBytes() once https://github.com/akka/akka-http/issues/1459 is resolved
-        Task.deferFuture(response.entity.dataBytes.runWith(Sink.ignore).map(_ => ()))
+        Task.deferFuture(response.entity.dataBytes.runWith(Sink.ignore)).void
       }
 
       override protected def regularAsByteArray(response: HttpResponse): Task[Array[Byte]] = {
