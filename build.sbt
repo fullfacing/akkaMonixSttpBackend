@@ -44,7 +44,6 @@ lazy val global = {
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
     addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full),
     resolvers ++= Seq(Resolver.sonatypeRepo("releases")),
-    libraryDependencies ++= akka ++ monix ++ sttp,
 
     credentials += Credentials("GnuPG Key ID", "gpg", "419C90FB607D11B0A7FE51CFDAF842ABC601C14F", "ignored"),
 
@@ -131,6 +130,11 @@ val sttp: Seq[ModuleID] = Seq(
   "com.softwaremill.sttp.client" %% "core" % "2.2.8"
 )
 
+val sttp3: Seq[ModuleID] = Seq(
+  "com.softwaremill.sttp.client3" %% "core" % "3.3.6",
+  "com.softwaremill.sttp.client3" %% "akka-http-backend" % "3.3.6"
+)
+
 val monix: Seq[ModuleID] = Seq(
   "io.monix" %% "monix" % "3.2.2"
 )
@@ -141,6 +145,7 @@ val `monix-bio`: Seq[ModuleID] = Seq(
 
 lazy val `sttp-akka-monix-core` = (project in file("./sttp-akka-monix-core"))
   .settings(global: _*)
+  .settings(libraryDependencies ++= akka ++ monix ++ sttp)
   .settings(name := "sttp-akka-monix-core", publishArtifact := true)
 
 
@@ -155,11 +160,30 @@ lazy val `sttp-akka-monix-bio` = (project in file("./sttp-akka-monix-bio"))
   .settings(name := "sttp-akka-monix-bio", publishArtifact := true)
   .dependsOn(`sttp-akka-monix-core`)
 
+lazy val `sttp3-akka-monix-core` = (project in file("./sttp3-akka-monix-core"))
+  .settings(global: _*)
+  .settings(libraryDependencies ++= akka ++ monix ++ sttp3)
+  .settings(name := "sttp3-akka-monix-core", publishArtifact := true)
+
+lazy val `sttp3-akka-monix-task` = (project in file("./sttp3-akka-monix-task"))
+  .settings(global: _*)
+  .settings(name := "sttp3-akka-monix-task", publishArtifact := true)
+  .dependsOn(`sttp3-akka-monix-core`)
+
+lazy val `sttp3-akka-monix-bio` = (project in file("./sttp3-akka-monix-bio"))
+  .settings(global: _*)
+  .settings(libraryDependencies ++= `monix-bio`)
+  .settings(name := "sttp3-akka-monix-bio", publishArtifact := true)
+  .dependsOn(`sttp3-akka-monix-core`)
+
 lazy val root = (project in file("."))
   .settings(global: _*)
   .settings(publishArtifact := false)
   .aggregate(
     `sttp-akka-monix-core`,
     `sttp-akka-monix-task`,
-    `sttp-akka-monix-bio`
+    `sttp-akka-monix-bio`,
+    `sttp3-akka-monix-core`,
+    `sttp3-akka-monix-task`,
+    `sttp3-akka-monix-bio`
   )
