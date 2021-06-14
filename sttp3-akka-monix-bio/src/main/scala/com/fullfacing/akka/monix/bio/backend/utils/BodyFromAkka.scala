@@ -9,10 +9,9 @@ import akka.{Done, NotUsed}
 import com.fullfacing.akka.monix.core.entityToObservable
 import monix.bio.Task
 import monix.reactive.Observable
-import sttp.capabilities.akka.AkkaStreams
-import sttp.client3.{ResponseAs, ResponseAsWebSocket, ResponseAsWebSocketStream, ResponseAsWebSocketUnsafe, WebSocketResponseAs}
 import sttp.client3.internal.{BodyFromResponseAs, SttpFile}
 import sttp.client3.ws.{GotAWebSocketException, NotAWebSocketException}
+import sttp.client3.{ResponseAs, ResponseAsWebSocket, ResponseAsWebSocketStream, ResponseAsWebSocketUnsafe, WebSocketResponseAs}
 import sttp.model.{Headers, ResponseMetadata}
 import sttp.monad.{FutureMonad, MonadError}
 import sttp.ws.{WebSocket, WebSocketBufferFull, WebSocketClosed, WebSocketFrame}
