@@ -10,7 +10,7 @@ jobs:
           key: sbt-cache-0
       - run:
           name: Compile JAR
-          command: sbt ++2.12.10! clean update compile
+          command: sbt ++2.12.13! clean update compile
       - save_cache:
           key: sbt-cache-0
           paths:
@@ -28,7 +28,7 @@ jobs:
           key: sbt-cache-0
       - run:
           name: Compile JAR
-          command: sbt ++2.13.1! clean update compile
+          command: sbt ++2.13.5! clean update compile
       - save_cache:
           key: sbt-cache-0
           paths:

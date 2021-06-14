@@ -4,7 +4,7 @@ import ReleaseTransformations._
 import sbt.url
 import xerial.sbt.Sonatype.GitHubHosting
 
-val scalaV = "2.13.1"
+val scalaV = "2.13.6"
 val scalacOpts = Seq(
   "-Ywarn-unused:implicits",
   "-Ywarn-unused:imports",
@@ -30,7 +30,7 @@ lazy val global = {
   Seq(
     organization := "com.fullfacing",
     scalaVersion := scalaV,
-    crossScalaVersions := Seq(scalaVersion.value, "2.12.10"),
+    crossScalaVersions := Seq(scalaVersion.value, "2.12.14"),
     scalacOptions ++= scalacOpts ++ (CrossVersion.partialVersion(scalaVersion.value) match {
       case Some((2, n)) if n <= 12 =>
         scalacOpts ++ Seq(
@@ -42,7 +42,7 @@ lazy val global = {
       case _ => scalacOpts
     }),
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
-    addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full),
+    addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.13.0" cross CrossVersion.full),
     resolvers ++= Seq(Resolver.sonatypeRepo("releases")),
 
     credentials += Credentials("GnuPG Key ID", "gpg", "419C90FB607D11B0A7FE51CFDAF842ABC601C14F", "ignored"),
@@ -122,12 +122,12 @@ lazy val swapToDevelopAction = { st: State =>
 }
 
 val akka: Seq[ModuleID] = Seq(
-  "com.typesafe.akka" %% "akka-stream" % "2.6.9",
-  "com.typesafe.akka" %% "akka-http" % "10.2.0"
+  "com.typesafe.akka" %% "akka-stream" % "2.6.14",
+  "com.typesafe.akka" %% "akka-http"   % "10.2.4"
 )
 
 val sttp: Seq[ModuleID] = Seq(
-  "com.softwaremill.sttp.client" %% "core" % "2.2.8"
+  "com.softwaremill.sttp.client" %% "core" % "2.2.9"
 )
 
 val sttp3: Seq[ModuleID] = Seq(
@@ -136,11 +136,11 @@ val sttp3: Seq[ModuleID] = Seq(
 )
 
 val monix: Seq[ModuleID] = Seq(
-  "io.monix" %% "monix" % "3.2.2"
+  "io.monix" %% "monix" % "3.4.0"
 )
 
 val `monix-bio`: Seq[ModuleID] = Seq(
-  "io.monix" %% "monix-bio" % "1.0.0"
+  "io.monix" %% "monix-bio" % "1.1.0"
 )
 
 lazy val `sttp-akka-monix-core` = (project in file("./sttp-akka-monix-core"))
