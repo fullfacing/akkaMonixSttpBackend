@@ -127,7 +127,7 @@ val akka: Seq[ModuleID] = Seq(
 )
 
 val sttp: Seq[ModuleID] = Seq(
-  "com.softwaremill.sttp.client" %% "core" % "2.2.9"
+  "com.softwaremill.sttp.client" %% "core" % "2.2.10"
 )
 
 val sttp3: Seq[ModuleID] = Seq(
