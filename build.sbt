@@ -131,7 +131,7 @@ val sttp: Seq[ModuleID] = Seq(
 )
 
 val sttp3: Seq[ModuleID] = Seq(
-  "com.softwaremill.sttp.client3" %% "core" % "3.3.6",
+  "com.softwaremill.sttp.client3" %% "core" % "3.3.15",
 )
 
 val monix: Seq[ModuleID] = Seq(
