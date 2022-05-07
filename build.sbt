@@ -135,7 +135,7 @@ val sttp3: Seq[ModuleID] = Seq(
 )
 
 val monix: Seq[ModuleID] = Seq(
-  "io.monix" %% "monix" % "3.4.0"
+  "io.monix" %% "monix" % "3.4.1"
 )
 
 val `monix-bio`: Seq[ModuleID] = Seq(
