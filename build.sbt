@@ -4,7 +4,7 @@ import ReleaseTransformations._
 import sbt.url
 import xerial.sbt.Sonatype.GitHubHosting
 
-val scalaV = "2.13.6"
+val scalaV = "2.13.11"
 val scalacOpts = Seq(
   "-Ywarn-unused:implicits",
   "-Ywarn-unused:imports",
